@@ -13,10 +13,10 @@ public class Joystick : MonoBehaviour
     public string receivedstring;
     public float xVal;
     public float yVal;
+   
     void Start()
     {
         stream.Open();
-        print("hello");
         xVal = 0;
         yVal = 0;
     }
@@ -27,6 +27,24 @@ public class Joystick : MonoBehaviour
         stream.BaseStream.Flush();
         xVal = 0;
         yVal = 0;
+
+        if(receivedstring.Contains(' ')){
+            string[] data = receivedstring.Split(' ');
+            for(int x = 0; x <= 1; x++){
+                if (data[x] == "UP"){
+                    yVal = 1;
+                }else if(data[x] == "DOWN"){
+                    yVal = -1;
+                }
+
+                if (data[x] == "RIGHT"){
+                    xVal = 1;
+                }else if(data[x] == "LEFT"){
+                    xVal = -1;
+                }
+            }
+            return;
+        }
 
         if (receivedstring == "UP"){
             yVal = 1;
